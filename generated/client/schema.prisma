@@ -11,12 +11,60 @@ generator client {
   output   = "../generated/client"
 }
 
+// This is your Prisma schema file
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
-  createdAt DateTime @default(now())
-  deletedAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime @default(now())
+
+  sentChats     Chat[]    @relation("SenderChats")
+  receivedChats Chat[]    @relation("ReceiverChats")
+  messages      Message[]
+  bets          Bet[]
+}
+
+model Chat {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  senderId   Int
+  receiverId Int
+
+  sender   User @relation("SenderChats", fields: [senderId], references: [id])
+  receiver User @relation("ReceiverChats", fields: [receiverId], references: [id])
+
+  messages Message[]
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  chatId   Int
+  senderId Int
+
+  chat   Chat @relation(fields: [chatId], references: [id])
+  sender User @relation(fields: [senderId], references: [id])
+}
+
+model Bet {
+  id         Int    @id @default(autoincrement())
+  store_hash String @unique
+  match_id   String
+  match_date String
+  match_time String
+  choice_a   String
+  choice_b   String
+  player     String
+  challenger String
+
+  userId    Int?
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }

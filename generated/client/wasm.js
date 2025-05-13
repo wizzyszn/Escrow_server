@@ -124,10 +124,39 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  password: 'password',
   createdAt: 'createdAt',
-  deletedAt: 'deletedAt',
   updatedAt: 'updatedAt',
-  password: 'password'
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.ChatScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  senderId: 'senderId',
+  receiverId: 'receiverId'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  chatId: 'chatId',
+  senderId: 'senderId'
+};
+
+exports.Prisma.BetScalarFieldEnum = {
+  id: 'id',
+  store_hash: 'store_hash',
+  match_id: 'match_id',
+  match_date: 'match_date',
+  match_time: 'match_time',
+  choice_a: 'choice_a',
+  choice_b: 'choice_b',
+  player: 'player',
+  challenger: 'challenger',
+  userId: 'userId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -140,9 +169,17 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Chat: 'Chat',
+  Message: 'Message',
+  Bet: 'Bet'
 };
 
 /**
