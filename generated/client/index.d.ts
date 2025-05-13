@@ -35,6 +35,24 @@ export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
 export type Bet = $Result.DefaultSelection<Prisma.$BetPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const Status: {
+  pending: 'pending',
+  resolved: 'resolved',
+  failed: 'failed'
+};
+
+export type Status = (typeof Status)[keyof typeof Status]
+
+}
+
+export type Status = $Enums.Status
+
+export const Status: typeof $Enums.Status
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -1255,6 +1273,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    address: string | null
     createdAt: Date | null
     updatedAt: Date | null
     deletedAt: Date | null
@@ -1265,6 +1284,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    address: string | null
     createdAt: Date | null
     updatedAt: Date | null
     deletedAt: Date | null
@@ -1275,6 +1295,7 @@ export namespace Prisma {
     name: number
     email: number
     password: number
+    address: number
     createdAt: number
     updatedAt: number
     deletedAt: number
@@ -1295,6 +1316,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    address?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -1305,6 +1327,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    address?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -1315,6 +1338,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    address?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -1412,6 +1436,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address: string | null
     createdAt: Date
     updatedAt: Date
     deletedAt: Date
@@ -1441,6 +1466,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    address?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
@@ -1456,6 +1482,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    address?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
@@ -1466,6 +1493,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    address?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
@@ -1476,12 +1504,13 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    address?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "address" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sentChats?: boolean | User$sentChatsArgs<ExtArgs>
     receivedChats?: boolean | User$receivedChatsArgs<ExtArgs>
@@ -1505,6 +1534,7 @@ export namespace Prisma {
       name: string
       email: string
       password: string
+      address: string | null
       createdAt: Date
       updatedAt: Date
       deletedAt: Date
@@ -1939,6 +1969,7 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly address: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly deletedAt: FieldRef<"User", 'DateTime'>
@@ -4709,6 +4740,7 @@ export namespace Prisma {
     choice_b: string | null
     player: string | null
     challenger: string | null
+    status: $Enums.Status | null
     userId: number | null
     createdAt: Date | null
   }
@@ -4723,6 +4755,7 @@ export namespace Prisma {
     choice_b: string | null
     player: string | null
     challenger: string | null
+    status: $Enums.Status | null
     userId: number | null
     createdAt: Date | null
   }
@@ -4737,6 +4770,7 @@ export namespace Prisma {
     choice_b: number
     player: number
     challenger: number
+    status: number
     userId: number
     createdAt: number
     _all: number
@@ -4763,6 +4797,7 @@ export namespace Prisma {
     choice_b?: true
     player?: true
     challenger?: true
+    status?: true
     userId?: true
     createdAt?: true
   }
@@ -4777,6 +4812,7 @@ export namespace Prisma {
     choice_b?: true
     player?: true
     challenger?: true
+    status?: true
     userId?: true
     createdAt?: true
   }
@@ -4791,6 +4827,7 @@ export namespace Prisma {
     choice_b?: true
     player?: true
     challenger?: true
+    status?: true
     userId?: true
     createdAt?: true
     _all?: true
@@ -4892,7 +4929,8 @@ export namespace Prisma {
     choice_b: string
     player: string
     challenger: string
-    userId: number | null
+    status: $Enums.Status
+    userId: number
     createdAt: Date
     _count: BetCountAggregateOutputType | null
     _avg: BetAvgAggregateOutputType | null
@@ -4925,9 +4963,10 @@ export namespace Prisma {
     choice_b?: boolean
     player?: boolean
     challenger?: boolean
+    status?: boolean
     userId?: boolean
     createdAt?: boolean
-    user?: boolean | Bet$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bet"]>
 
   export type BetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4940,9 +4979,10 @@ export namespace Prisma {
     choice_b?: boolean
     player?: boolean
     challenger?: boolean
+    status?: boolean
     userId?: boolean
     createdAt?: boolean
-    user?: boolean | Bet$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bet"]>
 
   export type BetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4955,9 +4995,10 @@ export namespace Prisma {
     choice_b?: boolean
     player?: boolean
     challenger?: boolean
+    status?: boolean
     userId?: boolean
     createdAt?: boolean
-    user?: boolean | Bet$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["bet"]>
 
   export type BetSelectScalar = {
@@ -4970,25 +5011,26 @@ export namespace Prisma {
     choice_b?: boolean
     player?: boolean
     challenger?: boolean
+    status?: boolean
     userId?: boolean
     createdAt?: boolean
   }
 
-  export type BetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "store_hash" | "match_id" | "match_date" | "match_time" | "choice_a" | "choice_b" | "player" | "challenger" | "userId" | "createdAt", ExtArgs["result"]["bet"]>
+  export type BetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "store_hash" | "match_id" | "match_date" | "match_time" | "choice_a" | "choice_b" | "player" | "challenger" | "status" | "userId" | "createdAt", ExtArgs["result"]["bet"]>
   export type BetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Bet$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type BetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Bet$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type BetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Bet$userArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $BetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Bet"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5000,7 +5042,8 @@ export namespace Prisma {
       choice_b: string
       player: string
       challenger: string
-      userId: number | null
+      status: $Enums.Status
+      userId: number
       createdAt: Date
     }, ExtArgs["result"]["bet"]>
     composites: {}
@@ -5396,7 +5439,7 @@ export namespace Prisma {
    */
   export interface Prisma__BetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends Bet$userArgs<ExtArgs> = {}>(args?: Subset<T, Bet$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5435,6 +5478,7 @@ export namespace Prisma {
     readonly choice_b: FieldRef<"Bet", 'String'>
     readonly player: FieldRef<"Bet", 'String'>
     readonly challenger: FieldRef<"Bet", 'String'>
+    readonly status: FieldRef<"Bet", 'Status'>
     readonly userId: FieldRef<"Bet", 'Int'>
     readonly createdAt: FieldRef<"Bet", 'DateTime'>
   }
@@ -5833,25 +5877,6 @@ export namespace Prisma {
   }
 
   /**
-   * Bet.user
-   */
-  export type Bet$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-  /**
    * Bet without action
    */
   export type BetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5889,6 +5914,7 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
+    address: 'address',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     deletedAt: 'deletedAt'
@@ -5928,6 +5954,7 @@ export namespace Prisma {
     choice_b: 'choice_b',
     player: 'player',
     challenger: 'challenger',
+    status: 'status',
     userId: 'userId',
     createdAt: 'createdAt'
   };
@@ -6007,6 +6034,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Status'
+   */
+  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
+    
+
+
+  /**
+   * Reference to a field of type 'Status[]'
+   */
+  export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -6031,6 +6072,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    address?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deletedAt?: DateTimeFilter<"User"> | Date | string
@@ -6045,6 +6087,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    address?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -6062,6 +6105,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    address?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deletedAt?: DateTimeFilter<"User"> | Date | string
@@ -6076,6 +6120,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    address?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -6094,6 +6139,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    address?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     deletedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -6230,9 +6276,10 @@ export namespace Prisma {
     choice_b?: StringFilter<"Bet"> | string
     player?: StringFilter<"Bet"> | string
     challenger?: StringFilter<"Bet"> | string
-    userId?: IntNullableFilter<"Bet"> | number | null
+    status?: EnumStatusFilter<"Bet"> | $Enums.Status
+    userId?: IntFilter<"Bet"> | number
     createdAt?: DateTimeFilter<"Bet"> | Date | string
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type BetOrderByWithRelationInput = {
@@ -6245,7 +6292,8 @@ export namespace Prisma {
     choice_b?: SortOrder
     player?: SortOrder
     challenger?: SortOrder
-    userId?: SortOrderInput | SortOrder
+    status?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
   }
@@ -6263,9 +6311,10 @@ export namespace Prisma {
     choice_b?: StringFilter<"Bet"> | string
     player?: StringFilter<"Bet"> | string
     challenger?: StringFilter<"Bet"> | string
-    userId?: IntNullableFilter<"Bet"> | number | null
+    status?: EnumStatusFilter<"Bet"> | $Enums.Status
+    userId?: IntFilter<"Bet"> | number
     createdAt?: DateTimeFilter<"Bet"> | Date | string
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "store_hash">
 
   export type BetOrderByWithAggregationInput = {
@@ -6278,7 +6327,8 @@ export namespace Prisma {
     choice_b?: SortOrder
     player?: SortOrder
     challenger?: SortOrder
-    userId?: SortOrderInput | SortOrder
+    status?: SortOrder
+    userId?: SortOrder
     createdAt?: SortOrder
     _count?: BetCountOrderByAggregateInput
     _avg?: BetAvgOrderByAggregateInput
@@ -6300,7 +6350,8 @@ export namespace Prisma {
     choice_b?: StringWithAggregatesFilter<"Bet"> | string
     player?: StringWithAggregatesFilter<"Bet"> | string
     challenger?: StringWithAggregatesFilter<"Bet"> | string
-    userId?: IntNullableWithAggregatesFilter<"Bet"> | number | null
+    status?: EnumStatusWithAggregatesFilter<"Bet"> | $Enums.Status
+    userId?: IntWithAggregatesFilter<"Bet"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Bet"> | Date | string
   }
 
@@ -6308,6 +6359,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -6322,6 +6374,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -6335,6 +6388,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6349,6 +6403,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6363,6 +6418,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -6372,6 +6428,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6382,6 +6439,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6495,8 +6553,9 @@ export namespace Prisma {
     choice_b: string
     player: string
     challenger: string
+    status?: $Enums.Status
     createdAt?: Date | string
-    user?: UserCreateNestedOneWithoutBetsInput
+    user: UserCreateNestedOneWithoutBetsInput
   }
 
   export type BetUncheckedCreateInput = {
@@ -6509,7 +6568,8 @@ export namespace Prisma {
     choice_b: string
     player: string
     challenger: string
-    userId?: number | null
+    status?: $Enums.Status
+    userId: number
     createdAt?: Date | string
   }
 
@@ -6522,8 +6582,9 @@ export namespace Prisma {
     choice_b?: StringFieldUpdateOperationsInput | string
     player?: StringFieldUpdateOperationsInput | string
     challenger?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutBetsNestedInput
+    user?: UserUpdateOneRequiredWithoutBetsNestedInput
   }
 
   export type BetUncheckedUpdateInput = {
@@ -6536,7 +6597,8 @@ export namespace Prisma {
     choice_b?: StringFieldUpdateOperationsInput | string
     player?: StringFieldUpdateOperationsInput | string
     challenger?: StringFieldUpdateOperationsInput | string
-    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6550,7 +6612,8 @@ export namespace Prisma {
     choice_b: string
     player: string
     challenger: string
-    userId?: number | null
+    status?: $Enums.Status
+    userId: number
     createdAt?: Date | string
   }
 
@@ -6563,6 +6626,7 @@ export namespace Prisma {
     choice_b?: StringFieldUpdateOperationsInput | string
     player?: StringFieldUpdateOperationsInput | string
     challenger?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6576,7 +6640,8 @@ export namespace Prisma {
     choice_b?: StringFieldUpdateOperationsInput | string
     player?: StringFieldUpdateOperationsInput | string
     challenger?: StringFieldUpdateOperationsInput | string
-    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6604,6 +6669,21 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -6635,6 +6715,11 @@ export namespace Prisma {
     none?: BetWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type ChatOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -6652,6 +6737,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    address?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -6666,6 +6752,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    address?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -6676,6 +6763,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    address?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -6717,6 +6805,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -6812,25 +6918,11 @@ export namespace Prisma {
     senderId?: SortOrder
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
   export type BetCountOrderByAggregateInput = {
@@ -6843,6 +6935,7 @@ export namespace Prisma {
     choice_b?: SortOrder
     player?: SortOrder
     challenger?: SortOrder
+    status?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
   }
@@ -6862,6 +6955,7 @@ export namespace Prisma {
     choice_b?: SortOrder
     player?: SortOrder
     challenger?: SortOrder
+    status?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
   }
@@ -6876,6 +6970,7 @@ export namespace Prisma {
     choice_b?: SortOrder
     player?: SortOrder
     challenger?: SortOrder
+    status?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
   }
@@ -6885,20 +6980,14 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type ChatCreateNestedManyWithoutSenderInput = {
@@ -6959,6 +7048,10 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -7189,22 +7282,16 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneWithoutBetsNestedInput = {
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
+  }
+
+  export type UserUpdateOneRequiredWithoutBetsNestedInput = {
     create?: XOR<UserCreateWithoutBetsInput, UserUncheckedCreateWithoutBetsInput>
     connectOrCreate?: UserCreateOrConnectWithoutBetsInput
     upsert?: UserUpsertWithoutBetsInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBetsInput, UserUpdateWithoutBetsInput>, UserUncheckedUpdateWithoutBetsInput>
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -7230,6 +7317,20 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -7287,6 +7388,34 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -7301,42 +7430,21 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
   }
 
   export type ChatCreateWithoutSenderInput = {
@@ -7417,6 +7525,7 @@ export namespace Prisma {
     choice_b: string
     player: string
     challenger: string
+    status?: $Enums.Status
     createdAt?: Date | string
   }
 
@@ -7430,6 +7539,7 @@ export namespace Prisma {
     choice_b: string
     player: string
     challenger: string
+    status?: $Enums.Status
     createdAt?: Date | string
   }
 
@@ -7541,7 +7651,8 @@ export namespace Prisma {
     choice_b?: StringFilter<"Bet"> | string
     player?: StringFilter<"Bet"> | string
     challenger?: StringFilter<"Bet"> | string
-    userId?: IntNullableFilter<"Bet"> | number | null
+    status?: EnumStatusFilter<"Bet"> | $Enums.Status
+    userId?: IntFilter<"Bet"> | number
     createdAt?: DateTimeFilter<"Bet"> | Date | string
   }
 
@@ -7549,6 +7660,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -7562,6 +7674,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -7579,6 +7692,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -7592,6 +7706,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -7643,6 +7758,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7656,6 +7772,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7679,6 +7796,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7692,6 +7810,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7738,6 +7857,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -7751,6 +7871,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -7803,6 +7924,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7816,6 +7938,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7828,6 +7951,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -7841,6 +7965,7 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    address?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string
@@ -7869,6 +7994,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7882,6 +8008,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7919,6 +8046,7 @@ export namespace Prisma {
     choice_b: string
     player: string
     challenger: string
+    status?: $Enums.Status
     createdAt?: Date | string
   }
 
@@ -7989,6 +8117,7 @@ export namespace Prisma {
     choice_b?: StringFieldUpdateOperationsInput | string
     player?: StringFieldUpdateOperationsInput | string
     challenger?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -8002,6 +8131,7 @@ export namespace Prisma {
     choice_b?: StringFieldUpdateOperationsInput | string
     player?: StringFieldUpdateOperationsInput | string
     challenger?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -8015,6 +8145,7 @@ export namespace Prisma {
     choice_b?: StringFieldUpdateOperationsInput | string
     player?: StringFieldUpdateOperationsInput | string
     challenger?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

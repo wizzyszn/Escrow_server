@@ -59,7 +59,8 @@ export class AuthService {
       });
 
       return newUser;
-    } catch (err) {
+    } 
+    catch (err) {
       if (
         err instanceof BadRequestException ||
         err instanceof ConflictException

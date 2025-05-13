@@ -125,6 +125,7 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  address: 'address',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -155,6 +156,7 @@ exports.Prisma.BetScalarFieldEnum = {
   choice_b: 'choice_b',
   player: 'player',
   challenger: 'challenger',
+  status: 'status',
   userId: 'userId',
   createdAt: 'createdAt'
 };
@@ -173,7 +175,11 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.Status = exports.$Enums.Status = {
+  pending: 'pending',
+  resolved: 'resolved',
+  failed: 'failed'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
