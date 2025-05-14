@@ -60,6 +60,7 @@ export class BetService {
           status: Status.pending,
         },
       });
+      return pendingBets
     } catch (err) {
       if (
         err instanceof BadRequestException ||
